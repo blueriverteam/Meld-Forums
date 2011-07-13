@@ -74,6 +74,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset sArgs.isCount = 1 />
 			<cfset count = getByAttributesQuery( argumentCollection=sArgs ) />
 			<cfset pageBean.setCount( count ) />
+			<cfset sArgs.isCount = 1 />
 		</cfif>
 			
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
