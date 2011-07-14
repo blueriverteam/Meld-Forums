@@ -137,7 +137,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<select name="availableObjects" id="availableObjects" class="multiSelect" size="14" style="width: 310px;">
 			<option value='plugin~Conferences (All)~#arguments.event.getValue("ObjectID")#~{"action":"conference"}'>Conferences (All)</option>
 			<cfloop from="1" to="#ArrayLen(aConferences)#" index="iiX">
-				<option value='plugin~Cart~#arguments.event.getValue("ObjectID")#~{"action":"conference","conferenceid":"#aConferences[iiX].getConferenceID()#"}'>#aConferences[iiX].getName()#</option>
+				<option value='plugin~#aConferences[iiX].getName()#~#arguments.event.getValue("ObjectID")#~{"action":"conference","conferenceid":"#aConferences[iiX].getConferenceID()#"}'>#aConferences[iiX].getName()#</option>
 			</cfloop>
 		</select>
 		</cfoutput></cfsavecontent>

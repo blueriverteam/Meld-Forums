@@ -220,6 +220,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfreturn getForumDAO().delete(ForumBean) />
 		<cfelse>
 			<cftransaction>
+				<cfset arguments.inTransaction = true />
 				<cfset getThreadService().deleteThreads( argumentCollection=arguments ) />		
 				<cfreturn getForumDAO().delete(ForumBean) />
 			</cftransaction>
@@ -242,11 +243,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			</cfloop>
 		<cfelse>
 			<cftransaction>
+				<cfset arguments.inTransaction = true />
 				<cfloop from="1" to="#ArrayLen(aForums)#" index="iiX">
 					<cfreturn deleteForum( aForums[iiX].getForumID(),true ) />
 				</cfloop>
 			</cftransaction>
 		</cfif>
+		<cfreturn true />
 	</cffunction>
 
 	<cffunction name="setForumGateway" access="public" returntype="void" output="false">

@@ -209,10 +209,10 @@ eInfo.e0111 = StructNew();
 Input = Replace(Input, "«", "&laquo;", "All");
 Input = Replace(Input, "»", "&raquo;", "All");
 	// The O Graves substitute angle brackets withing in Lists
-Input = Replace(Input, "Ò", "&Ograve;", "All");
-Input = Replace(Input, "ò", "&ograve;", "All");
+Input = Replace(Input, "#Chr(210)#", "&Ograve;", "All");
+Input = Replace(Input, "#Chr(242)#", "&ograve;", "All");
 	// The O Slash replaces list items
-Input = Replace(Input, "Ø", "&Oslash;", "All");
+Input = Replace(Input, "#Chr(216)#", "&Oslash;", "All");
 	// The Section mark substitutes quotes in generated HTML
 Input = Replace(Input, "§", "&sect;", "All");
 	// U graves/acutes are used to protect non-tag square brackets
@@ -308,15 +308,15 @@ if ( ConvertBBML AND Find("[", Input) AND Find("]", Input) ) {
 		Input = ReReplaceNoCase(Input, "\[email\]([^[(£]*)\[/email\]", "£ rel=§nofollow§ href=§mailto:\1§»\1«/a»", "All");
 	
 			// Convert Lists
-			// List brackets get replaced with "Ò" and "ò" to distingush them for validation
-		Input = Replace(Input, "[*]", "Ø", "ALL");
-		Input = ReReplaceNoCase(Input, "\[list\][[:space:]]*Ø([^[]*)\[/list\]", "ÒulòØ\1Ò/ulò", "All");
-		Input = ReReplaceNoCase(Input, "\[list=(1|a|A|i|I)\][[:space:]]*Ø([^[]*)\[/list(=\1)?\]", "Òol type=§\1§òØ\2Ò/olò", "All");
-
+			// List brackets get replaced with "#Chr(210)#" and "#Chr(242)#" to distingush them for validation
+		Input = Replace(Input, "[*]", "#Chr(216)#", "ALL");
+		Input = ReReplaceNoCase(Input, "\[list\][[:space:]]*#Chr(216)#([^[]*)\[/list\]", "#Chr(210)#ul#Chr(242)##Chr(216)#\1#Chr(210)#/ul#Chr(242)#", "All");
+		Input = ReReplaceNoCase(Input, "\[list=(1|a|A|i|I)\][[:space:]]*#Chr(216)#([^[]*)\[/list(=\1)?\]", "#Chr(210)#ol type=§\1§#Chr(242)##Chr(216)#\2#Chr(210)#/ol#Chr(242)#", "All");
+	
 			// Clean Up lists
 			// Add end item tags and remove line feeds and carriage returns
 		do {
-			bList = ReFind("Ò(ul|ol)( type=§.§)?ò", Input, 1);
+			bList = ReFind("#Chr(210)#(ul|ol)( type=§.§)?#Chr(242)#", Input, 1);
 			if ( bList NEQ 0 ) {
 				CurPos = bList;
 				ItemCnt = 0;
@@ -328,7 +328,7 @@ if ( ConvertBBML AND Find("[", Input) AND Find("]", Input) ) {
 						CurPos = CurPos - 1;
 					};
 						// Convert item tags to pseudo code and insert End item tags
-					if ( Compare(Mid(Input, CurPos, 1), "Ø" ) EQ 0 ) {
+					if ( Compare(Mid(Input, CurPos, 1), "#Chr(216)#" ) EQ 0 ) {
 						Input = RemoveChars(Input, CurPos, 1);
 						Input = Insert("«li»", Input, CurPos - 1);
 						ItemCnt = ItemCnt + 1;
@@ -338,7 +338,7 @@ if ( ConvertBBML AND Find("[", Input) AND Find("]", Input) ) {
 						};
 					};
 						// When we find the beginning of the list end tag, stop
-					if ( Compare(Mid(Input, CurPos, 1), "Ò" ) EQ 0 ) {
+					if ( Compare(Mid(Input, CurPos, 1), "#Chr(210)#" ) EQ 0 ) {
 						Input = RemoveChars(Input, CurPos, 1);
 						Input = Insert("«", Input, CurPos - 1);
 						Input = Insert("«/li»", Input, CurPos - 1);
@@ -350,13 +350,13 @@ if ( ConvertBBML AND Find("[", Input) AND Find("]", Input) ) {
 		} while (bList NEQ 0);
 
 			// Set the List tags back to psuedo-code
-		Input = Replace(Input, "ò", "»", "ALL");
+		Input = Replace(Input, "#Chr(242)#", "»", "ALL");
 
 		// If no changes have been made, break out of the loop - we're done!
 	} while (TempInput NEQ Input);
 
 		// Convert Orphaned List Items back to BBML code
-	Input = Replace(Input, "Ø", "[*]", "ALL");
+	Input = Replace(Input, "#Chr(216)#", "[*]", "ALL");
 };
 
 	// Convert Smilies if Needed

@@ -401,6 +401,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset getThreadGateway().unblockByUserID(argumentCollection=arguments) />
 	</cffunction>
 
+	<cffunction name="deleteThreads" access="public" output="false" returntype="boolean">
+		<cfargument name="ForumID" type="uuid" required="true" />
+		<cfargument name="inTransaction" type="boolean" required="false" default="true" />
+	
+		<cfif arguments.inTransaction>
+			<cfset getThreadGateway().deleteThreads( argumentCollection=arguments ) />		
+		<cfelse>
+			<cftransaction>
+				<cfset arguments.inTransaction = true />
+				<cfset getThreadService().deleteThreads( argumentCollection=arguments ) />		
+			</cftransaction>
+		</cfif>
+			
+		<cfreturn true />
+	</cffunction>
+
+
 <!---^^CUSTOMEND^^--->
 	<cffunction name="setPostService" access="public" returntype="any" output="false">
 		<cfargument name="PostService" type="any" required="true">

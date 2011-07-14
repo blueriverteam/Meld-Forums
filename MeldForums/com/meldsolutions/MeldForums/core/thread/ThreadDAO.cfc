@@ -205,6 +205,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="ThreadBean" type="any" required="true" />
 
 		<cfset var qDelete = "">
+		<cftransaction>
+
+		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			DELETE FROM
+			#variables.dsnprefix#mf_post
+			WHERE	
+				threadID  = <cfqueryparam value="#arguments.ThreadBean.getThreadID()#" CFSQLType="cf_sql_char" maxlength="35" />
+		</cfquery>
+			
 		<cfquery name="qDelete" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			DELETE FROM
 					#variables.dsnprefix#mf_thread
@@ -214,7 +223,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				AND ThreadID = <cfqueryparam value="#arguments.ThreadBean.getThreadID()#" CFSQLType="cf_sql_char" maxlength="35" />
 			<!---^^PRIMARYKEYS-END^^--->
 		</cfquery>
-
+		</cftransaction>
 		<cfset arguments.ThreadBean.setBeanExists( 0 ) />
 
 		<cfreturn true />

@@ -785,6 +785,34 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				isDisabled = <cfqueryparam value="#arguments.type#" CFSQLType="cf_sql_integer" />			
 		</cfquery>
 	</cffunction>
+
+	<cffunction name="deleteThreads" access="public" output="false" returntype="boolean">
+		<cfargument name="ForumID" type="uuid" required="true" />
+	
+		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			DELETE FROM
+			#variables.dsnprefix#mf_post
+			WHERE	
+				threadID IN
+				(
+					SELECT
+						threadID
+					FROM
+						#variables.dsnprefix#mf_thread
+					WHERE
+						forumID = <cfqueryparam value="#arguments.ForumID#" CFSQLType="cf_sql_char" maxlength="35" />
+				)
+		</cfquery>
+			
+		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			DELETE FROM
+			#variables.dsnprefix#mf_thread
+			WHERE	
+				forumID = <cfqueryparam value="#arguments.ForumID#" CFSQLType="cf_sql_char" maxlength="35" />
+		</cfquery>
+			
+		<cfreturn true />
+	</cffunction>
 	
 <!---^^CUSTOMEND^^--->
 
