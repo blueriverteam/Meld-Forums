@@ -22,13 +22,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="before" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+		
 		<cfset super.before( argumentCollection=arguments ) />
 	</cffunction>
 
 	<cffunction name="default" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
-		<cfparam name="rc.panel" default="" />
+		<cfparam name="url.panel" default="overview" />
+
+		<cfset rc.panel = url.panel />
 
 		<cfset doGetUser( argumentCollection=arguments ) />
 	</cffunction>
@@ -36,16 +39,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="view" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
-		<cfparam name="rc.panel" default="" />
+		<cfparam name="url.panel" default="overview" />
+
+		<cfset rc.panel = url.panel />
+
 		<cfset doGetUser( argumentCollection=arguments ) />
 	</cffunction>
 
 	<cffunction name="panel" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
-		<cfparam name="rc.panel" default="" />
+		<cfparam name="url.panel" default="overview" />
 
-		<cfif len(rc.panel) AND not fileExists(expandPath('/MeldForums/') & "forum/views/profile/panels/#rc.panel#.cfm" )>
+		<cfset rc.panel = url.panel />
+
+		<cfif len(url.panel) AND not fileExists(expandPath('/MeldForums/') & "forum/views/profile/panels/#url.panel#.cfm" )>
 			<cflocation url="./?ecode=1019" addtoken="false" >
 		</cfif>
 		
@@ -99,7 +107,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset meldEvent		= rc.mmEvents.createEvent( rc.$ ) />
 
 		<cfset meldEvent.setValue('form',form ) />
-		<cfset meldEvent.setValue('panel',rc.panel ) />
+		<cfset meldEvent.setValue('panel',url.panel ) />
 		<cfset meldEvent.setValue('userID',rc.userID ) />
 		<cfset meldEvent.setValue('updateComplete',false ) />
 
@@ -109,7 +117,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfreturn />
 		</cfif>
 
-		<cfswitch expression="#rc.panel#">
+		<cfswitch expression="#url.panel#">
 			<cfcase value="avatar">
 				<cfset doUpdateAvatar( argumentCollection=arguments ) />
 			</cfcase> 	
