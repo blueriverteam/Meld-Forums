@@ -198,7 +198,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			</cfif>
 
 		<cfif not arguments.isCount and arguments.groupbyThread>
-			GROUP BY thr.threadID
+			GROUP BY thr.threadID<cfif variables.dsntype eq "mssql">,postID</cfif>
 		</cfif>
 		<cfif not arguments.isCount and structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
 			ORDER BY #arguments.orderby#

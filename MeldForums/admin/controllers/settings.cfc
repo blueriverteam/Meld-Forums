@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="default" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 
+		<cfset var settingsManager		= getBeanFactory().getBean("MeldForumsSettingsManager") />
 		<cfset var settingsService		= getBeanFactory().getBean("settingsService") />
 		<cfset var mmBreadCrumbs		= getBeanFactory().getBean("mmBreadCrumbs") />
 		<cfset var mmResourceBundle		= getBeanFactory().getBean("mmResourceBundle") />
@@ -42,6 +43,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		</cfif>
 
 		<cfset rc.settingsBean	= settingsBean />
+		<cfset rc.themename			= settingsManager.getSiteSettings( rc.siteID ).getThemeBean().getName() />
 	</cffunction>
 
 	<cffunction name="edit" access="public" returntype="void" output="false">
@@ -97,7 +99,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset rc.qGroupsPublic		= qGroupsPublic />
 		<cfset rc.qGroupsPrivate	= qGroupsPrivate />
-			
 	</cffunction>
 
 	<cffunction name="actionUpdateSettings" access="private" returntype="boolean">

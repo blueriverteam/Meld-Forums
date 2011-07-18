@@ -19,6 +19,12 @@
 	</ul>
 	</dl>
 	<dl class="oneColumn">
+	<h4>#rc.mmRBF.key('theme')#</h4>
+	<ul class="metadata">
+		<li>#rc.mmRBF.key('theme')#: <strong>#rc.themename#</strong></li>
+	</ul>
+	</dl>
+	<dl class="oneColumn">
 	<h4>#rc.mmRBF.key('files')#</h4>
 	<ul class="metadata">
 		<li>#rc.mmRBF.key('filesizelimit')#: <strong>#rc.settingsBean.getFileSizeLimit()#</strong></li>
