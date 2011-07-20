@@ -15,7 +15,7 @@
 	<tr>
 		<th colspan="#local.columns#" class="mf-masthead">
 			<span class="mf-wrapper">
-				<h3><a href="#rc.MFBean.getconferenceLink(local.conferenceBean)#">#local.conferenceBean.getName()#</a></h3>
+				<h3><a href="#rc.MFBean.getconferenceLink(local.conferenceBean)#">#local.conferenceBean.getTitle()#</a></h3>
 				<cfif len( local.conferenceBean.getDescription() )><div class="description">#local.conferenceBean.getDescription()#</div></cfif>
 			</span>
 		</th>

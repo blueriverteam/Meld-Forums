@@ -521,20 +521,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset sendToUserBean = getMeldForumsSettingsManager().getUserFromCache( arguments.threadBean.getUserID(),arguments.siteID )>
 
-		<cfif sendToUserBean.getDoReplyNotifications()>
-			<cfset sendBody = replace(arguments.subscriptionText,"[[USERID]]",sendToUserBean.getUserID(),"all")>
-			<cfset sendBody = replace(sendBody,"[[FIRSTNAME]]",sendToUserBean.getExternalUserBean().getFname(),"all")>
-			<cfset sendBody = replace(sendBody,"[[LASTNAME]]",sendToUserBean.getExternalUserBean().getLname(),"all")>
-
-			<cfset mailer.sendHTML(sendBody,
-				sendToUserBean.getExternalUserBean().getEmail(),
-				sendToUserBean.getScreenName(),
-				txtNotify,
-				arguments.siteID,
-				$.siteConfig().getContactEmail() ) />
+		<cfif sendToUserBean.beanExists()>
+			<cfif sendToUserBean.getDoReplyNotifications()>
+				<cfset sendBody = replace(arguments.subscriptionText,"[[USERID]]",sendToUserBean.getUserID(),"all")>
+				<cfset sendBody = replace(sendBody,"[[FIRSTNAME]]",sendToUserBean.getExternalUserBean().getFname(),"all")>
+				<cfset sendBody = replace(sendBody,"[[LASTNAME]]",sendToUserBean.getExternalUserBean().getLname(),"all")>
+	
+				<cfset mailer.sendHTML(sendBody,
+					sendToUserBean.getExternalUserBean().getEmail(),
+					sendToUserBean.getScreenName(),
+					txtNotify,
+					arguments.siteID,
+					$.siteConfig().getContactEmail() ) />
+			</cfif>
+			<cfreturn true />
 		</cfif>
 		
-		<cfreturn true />
+		<cfreturn false />
 	</cffunction>
 
 <!---^^CUSTOMEND^^--->

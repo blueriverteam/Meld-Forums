@@ -17,7 +17,7 @@
 	</cfif>
 
 </cfsilent><cfoutput>
-<tr class="mf-forum-pod #attributes.rowClass# clearfix" id="mf-forum-#rereplaceNoCase(local.forumBean.getName(),"[^[:alnum:]]","","all")#">
+<tr class="mf-forum-pod #attributes.rowClass# clearfix" id="mf-forum-#rereplaceNoCase(local.forumBean.getTitle(),"[^[:alnum:]]","","all")#">
 	<td class="mf-block-icon">
 		<span class="mf-wrapper">
 		<cfif len(local.eventContent['conferenceforumicon'])>
@@ -32,7 +32,7 @@
 		<cfif len(local.eventContent['conferenceforumheading'])>
 			#local.eventContent['conferenceforumheading']#
 		<cfelse>
-			<h4><a href="#rc.MFBean.getForumLink(local.forumBean)#/">#local.forumBean.getName()#</a></h4>
+			<h4><a href="#rc.MFBean.getForumLink(local.forumBean)#/">#local.forumBean.getTitle()#</a></h4>
 			<cfif len( local.forumBean.getDescription() )>#local.forumBean.getDescription()#</cfif>
 		</cfif>
 		</span>

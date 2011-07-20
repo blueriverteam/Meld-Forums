@@ -53,7 +53,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		</cflock>
 	</cffunction>
 
-	<cffunction name="getUserFromCache" returntype="void" access="public" output="false">
+	<cffunction name="getUserFromCache" returntype="any" access="public" output="false">
 		<cfargument name="userID" type="string" required="true" />
 		<cfargument name="siteID" type="string" required="false" />
 

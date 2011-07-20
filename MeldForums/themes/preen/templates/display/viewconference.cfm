@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset local.conferenceBean	= local.aConferences[local.iiX] />
 	<cfset local.aForums	= local.conferenceBean.getForums() />
 	<cfif ArrayLen( local.aForums ) and rc.MeldForumsBean.getHasPermissions( local.conferenceBean.getActiveConfigurationID() )>
-	<table class="mf-conference-block" id="mf-conference-#lcase(rereplace(local.conferenceBean.getName(),"[^[:alnum:]]","","all"))#">
+	<table class="mf-conference-block" id="mf-conference-#lcase(rereplace(local.conferenceBean.getTitle(),"[^[:alnum:]]","","all"))#">
 		<cfif len(local.eventContent['conference'])>
 			#local.eventContent['conference']#
 		<cfelse>

@@ -9,7 +9,7 @@
 		<cfif len(local.eventContent['forumdescription'])>
 			#local.eventContent['forumdescription']#
 		<cfelse>
-		<h3>#local.forumBean.getName()#</h3>
+		<h3>#local.forumBean.getTitle()#</h3>
 		<cfif len( local.forumBean.getDescription() )>
 			<div class="description">#local.forumBean.getDescription()#</div>
 		</cfif>

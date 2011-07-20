@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 </cfif>
 
 <cfif ArrayLen(local.aAnnounce)>
-	<table class="mf-forum-block mf-forum-announce" id="mf-forum-announce-#lcase(rereplace(rc.forumBean.getName(),"[^[:alnum:]]","","all"))#_announcements">
+	<table class="mf-forum-block mf-forum-announce" id="mf-forum-announce-#lcase(rereplace(rc.forumBean.getTitle(),"[^[:alnum:]]","","all"))#_announcements">
 		<!--- announcements --->
 		<cfinclude template="#rc.MFBean.getThemeRootDirectory()#event/e_md_announcement.cfm">
 		<cfif len(local.eventContent['announcementheader'])>
@@ -61,7 +61,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <!---<cfmodule template="module/forum_buttonbar.cfm" local="#local#" class="first">--->
 <cfmodule template="module/md_forum_pagenav.cfm" local="#local#" class="first">
 
-<table class="mf-forum-block mf-forum-threads" id="mf-forum-threads-#lcase(rereplace(rc.forumBean.getName(),"[^[:alnum:]]","","all"))#">
+<table class="mf-forum-block mf-forum-threads" id="mf-forum-threads-#lcase(rereplace(rc.forumBean.getTitle(),"[^[:alnum:]]","","all"))#">
 <!--- page navigation --->
 	<!--- forum header --->
 		<cfinclude template="#rc.MFBean.getThemeRootDirectory()#event/e_md_forum.cfm">
