@@ -410,13 +410,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var iiX				= "" />
 		<cfset var doUpdate			= false />
 		<cfset var filename			= $.event().getValue("currentFileName") & "/" />
-
+		
 		<cfloop from="1" to="#arraylen(aCrumbData)#" index="iiX">
 			<cfset strCrumb = aCrumbData[iiX] />
 			<cfset strCrumb.filename = filename />
 			<cfset MuraCrumbManager.addCrumb( MuraCrumbManager.createCrumb( argumentCollection=strCrumb ),$.event('crumbdata') ) />
 		</cfloop>
-<!---<cfabort>--->
+
 	</cffunction>
 
 	<cffunction name="getSiteSettings" returntype="any" access="public" output="false">

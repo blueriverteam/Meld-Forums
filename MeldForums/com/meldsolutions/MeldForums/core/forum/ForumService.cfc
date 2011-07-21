@@ -239,16 +239,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfif arguments.inTransaction>
 			<cfloop from="1" to="#ArrayLen(aForums)#" index="iiX">
-				<cfreturn deleteForum( aForums[iiX].getForumID(),true ) />
+				<cfset deleteForum( aForums[iiX].getForumID(),true ) />
 			</cfloop>
 		<cfelse>
 			<cftransaction>
 				<cfset arguments.inTransaction = true />
 				<cfloop from="1" to="#ArrayLen(aForums)#" index="iiX">
-					<cfreturn deleteForum( aForums[iiX].getForumID(),true ) />
+					<cfset deleteForum( aForums[iiX].getForumID(),true ) />
 				</cfloop>
 			</cftransaction>
 		</cfif>
+		
 		<cfreturn true />
 	</cffunction>
 
