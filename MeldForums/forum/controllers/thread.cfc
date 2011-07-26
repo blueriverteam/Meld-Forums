@@ -46,12 +46,46 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfif isDefined("form.btAction") and btAction eq rc.mmRBF.key('submit')>
 			<cfset doUpdateEditThread( argumentCollection=arguments ) />
-		<cfelseif isDefined("form.btAction") and btAction eq rc.mmRBF.key('delete') and form.btActionConfirm eq "confirm">
-			<cfset doDeleteEditThread( argumentCollection=arguments ) />
+		<cfelseif isDefined("form.btAction") and btAction eq rc.mmRBF.key('delete')> <!--- and form.btActionConfirm eq "confirm">--->
+			<cfset doDeleteThread( argumentCollection=arguments ) />
 		</cfif>
 
 		<cfset doGetEditThread( argumentCollection=arguments ) />
 	</cffunction>
+
+	<cffunction name="doDeleteThread" returntype="void" access="private" output="false">
+		<cfargument name="rc" type="struct" required="true">
+
+		<cfset var threadService			= getBeanFactory().getBean("threadService") />
+		<cfset var forumService				= getBeanFactory().getBean("forumService") />
+		<cfset var forumBean				= "" />
+		<cfset var threadBean				= "" />
+
+		<cfif not $.currentUser().isLoggedIn() or not rc.MFBean.CanUserCreateThread()>
+			<cfset getErrorManager().addErrorByCode(2016)>
+			<cfreturn>
+		</cfif>
+
+		<cfset threadBean		= threadService.getThread( rc.threadID ) />
+
+		<cfif not threadBean.beanExists()>
+			<cfset getErrorManager().addErrorByCode(1013)>
+			<cfreturn>
+		</cfif>
+
+		<cfset forumBean		= forumService.getForum( threadBean.getForumID() ) />
+
+		<!--- forum exists --->
+		<cfif not forumBean.beanExists()>
+			<cfset getErrorManager().addErrorByCode(1012)>
+			<cfreturn>
+		</cfif>
+		
+		<cfset threadService.deleteThread( rc.threadID ) />
+
+		<cflocation url="#rc.MFBean.getForumLink( forumBean )#/" addtoken="false">
+	</cffunction>
+	
 
 	<cffunction name="doGetThread" returntype="void" access="private" output="false">
 		<cfargument name="rc" type="struct" required="true">
