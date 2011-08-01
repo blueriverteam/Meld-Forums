@@ -231,6 +231,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset var MFEvent					= rc.mmEvents.createEvent( rc.$ ) />
 
+		<cfparam name="rc.typeID" default="0" />
+
 		<cfset sArgs.forumID			= forumID />
 
 		<cfset forumBean				= forumService.getForum( argumentCollection=sArgs ) />
@@ -382,6 +384,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var postBean					= "" />
 		<cfset var threadID					= "" />
 		<cfset var aIntercept				= rc.MFBean.getIntercept() />
+
+		<cfparam name="rc.typeID" default="0" />
 
 		<cfif ArrayLen(aIntercept) lt 3>
 			<cflocation url="#rc.MFBean.getForumWebRoot()#/?ecode=1014" addtoken="false">
