@@ -76,7 +76,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset pageBean.setCount( count ) />
 			<cfset sArgs.isCount = 0 />
 		</cfif>
-			
+		
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			SELECT
 			<cfif not arguments.isCount and variables.dsntype eq "mssql" AND structKeyExists(arguments,"pageBean")> 	
@@ -89,8 +89,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					COUNT(pst.postID) AS total
 				</cfif>					
 			<cfelse>
-				*,1 AS BeanExists,
-				thr.title AS Title,thr.idx AS threadIDX,thr.friendlyName as threadFriendlyName,thr.siteID as siteID
+				<cfif groupByThread>
+					pst.postID,
+					thr.title AS Title
+				<cfelse>
+					*,1 AS BeanExists,
+					thr.title AS Title,thr.idx AS threadIDX,thr.friendlyName as threadFriendlyName,thr.siteID as siteID
+				</cfif>					
 			</cfif>
 			FROM	#variables.dsnprefix#mf_post pst
 			<cfif not arguments.isCount or len(arguments.siteID)>
@@ -197,8 +202,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				AND pst.ParentID = <cfqueryparam value="#arguments.ParentID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
 
-		<cfif not arguments.isCount and arguments.groupbyThread>
-			GROUP BY thr.threadID<cfif variables.dsntype eq "mssql">,postID</cfif>
+		<cfif not arguments.isCount and arguments.groupbyThread eq true>
+			GROUP BY thr.threadID
+			<cfif variables.dsntype eq "mssql">,pst.postID,thr.title,pst.datelastupdate</cfif>
 		</cfif>
 		<cfif not arguments.isCount and structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
 			ORDER BY #arguments.orderby#
