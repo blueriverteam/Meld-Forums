@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset var conferenceBean	= "">
 
-		<cfif not StructKeyExists(variables.instance.ConfigurationConferenceKey,conferenceID)>
+		<cfif not StructKeyExists(variables.instance.ConfigurationConferenceKey,arguments.conferenceID)>
 			<cfset conferenceBean = getConferenceService().getConference( arguments.conferenceID )>
 			<cfif conferenceBean.beanExists()>
 				<cfset variables.instance.ConfigurationConferenceKey[arguments.conferenceID] = conferenceBean.getActiveConfigurationID()>
@@ -72,7 +72,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<cfset ConfigurationID = "00000000-0000-0000-0000000000000001">
 			</cfif>
 		<cfelse>
-			<cfset ConfigurationID = variables.instance.ConfigurationForumKey[arguments.conferenceID]>
+			<cfset ConfigurationID = variables.instance.ConfigurationConferenceKey[arguments.conferenceID]>
 		</cfif>
 
 		<cfreturn getConfigurationByID( ConfigurationID )>
