@@ -11,13 +11,14 @@
 			<tr <cfif local.iiX mod 2>class="alt"</cfif>>
 				<td class="varWidth">
 					<a href="#rc.MeldForumsBean.getLastPostLink( local.post )#" target="_new">#left(local.post.getTitle(),25)#<cfif len(local.post.getTitle()) gt 25>...</cfif>	</a>					
-									
 				</td>
 				<td class="varWidth">
 					<a href="#rc.MeldForumsBean.getProfileLink( local.user )#" target="_new">#local.user.getScreenName()#</a>					
 				</td>
 				<td class="midWidth">
-					#lsdateFormat(local.user.getDateLastUpdate(),"short")# #lstimeFormat(local.user.getDateLastUpdate(),"short")#					
+					<cfif isDate( local.user.getDateLastUpdate() )>
+						#lsdateFormat(local.user.getDateLastUpdate(),"short")# #lstimeFormat(local.user.getDateLastUpdate(),"short")#
+					</cfif>					
 				</td>
 			</tr>
 		</cfloop>
