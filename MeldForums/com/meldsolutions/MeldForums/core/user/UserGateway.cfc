@@ -189,7 +189,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				AND DateLastUpdate = <cfqueryparam value="#arguments.DateLastUpdate#" CFSQLType="cf_sql_timestamp" />
 			</cfif>
 			<!---^^VALUES-END^^--->
-		<cfif structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
+		<cfif not arguments.isCount and structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
 			ORDER BY #arguments.orderby#
 		</cfif>
 		<cfif not arguments.isCount and variables.dsntype eq "mysql" and structKeyExists(arguments,"pageBean")>
