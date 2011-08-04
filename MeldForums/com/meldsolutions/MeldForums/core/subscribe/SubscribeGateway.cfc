@@ -476,7 +476,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			SELECT
 				fName,lName,email
 			FROM
-				tUsers
+				tusers
 			WHERE
 				userID IN  (<cfqueryparam value="#valueList(qList.userID)#" list="true" CFSQLType="cf_sql_char" />)
 		</cfquery>
