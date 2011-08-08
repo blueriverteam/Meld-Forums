@@ -91,7 +91,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfelse>
 				<cfif groupByThread>
 					pst.postID,
-					thr.title AS Title
+					thr.title AS Title,
+					thr.idx AS threadIDX,
+					thr.friendlyName as threadFriendlyName
 				<cfelse>
 					*,1 AS BeanExists,
 					thr.title AS Title,thr.idx AS threadIDX,thr.friendlyName as threadFriendlyName,thr.siteID as siteID
@@ -204,7 +206,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfif not arguments.isCount and arguments.groupbyThread eq true>
 			GROUP BY thr.threadID
-			<cfif variables.dsntype eq "mssql">,pst.postID,thr.title,pst.datelastupdate</cfif>
+			<cfif variables.dsntype eq "mssql">,pst.postID,thr.title,thr.idx,thr.friendlyName,pst.datelastupdate</cfif>
 		</cfif>
 		<cfif not arguments.isCount and structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
 			ORDER BY #arguments.orderby#
