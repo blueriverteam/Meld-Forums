@@ -68,9 +68,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfreturn />
 		</cfif>
 
+		<cfset request.nocache = 1 />
+
 		<cfset pluginEvent.setValue("aCrumbData",aCrumbData) />
 		<cfset meldForumsEventManager.announceEvent($,"onMeldForumsAddBreadCrumbs",pluginEvent)>
 		<cfset meldForumsManager.setCrumbData( $,aCrumbData ) />
+	</cffunction>
+
+	<cffunction name="onSiteRequestStart">
+		<cfargument name="$">
+
+		<cfset request.nocache = 1 />
 	</cffunction>
 
 	<cffunction name="onSiteRequestInit">
@@ -86,6 +94,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset var aIntercept			= ArrayNew(1) />
 		<cfset var sIntercept			= "" />
+
+		<cfset request.nocache = 1 />
 
 		<cfif not filenameMarker or isSimpleValue(beanFactory)>
 			<cfreturn />
