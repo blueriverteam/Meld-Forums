@@ -291,7 +291,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset variables.instance.BaseRBLocale = arguments.BaseRBLocale />
 	</cffunction>
 	<cffunction name="getBaseRBLocale" access="public" returntype="string" output="false">
-		<cfif structKeyExists(session,"RB")>
+		<cfif isDefined("session") and structKeyExists(session,"RB")>
 			<cfif session.rb eq "en_US">
 				<cfreturn "en">
 			<cfelse>
