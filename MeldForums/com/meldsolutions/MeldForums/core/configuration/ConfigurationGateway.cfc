@@ -397,10 +397,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif structKeyExists(arguments.criteria,"DateLastUpdate") and len(arguments.criteria.DateLastUpdate)>
 			AND DateLastUpdate LIKE <cfqueryparam value="%#arguments.criteria.DateLastUpdate#%" CFSQLType="cf_sql_timestamp" />
 			</cfif>
-			<cfif not arguments.isCount AND len( arguments.orderBy )>
+			<cfif not arguments.isCount AND len( arguments.orderBy )and variables.dsntype neq "mssql"> 	
 				ORDER BY isMaster DESC,#returnOrder#
-			<cfelse>
-				ORDER BY isMaster DESC
 			</cfif>
 			<cfif not arguments.isCount and arguments.size gt 0 AND variables.dsntype eq "mysql">
 				LIMIT <cfqueryparam value="#arguments.start#" CFSQLType="cf_sql_integer" />,<cfqueryparam value="#arguments.size#" CFSQLType="cf_sql_integer" />
