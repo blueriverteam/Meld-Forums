@@ -413,7 +413,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfloop from="1" to="#arraylen(aCrumbData)#" index="iiX">
 			<cfset strCrumb = aCrumbData[iiX] />
 			<cfset strCrumb.filename = filename />
-			<cfset MuraCrumbManager.addCrumb( MuraCrumbManager.createCrumb( argumentCollection=strCrumb ),aMuraCrumb ) />
+			<cfset arrayPrepend( aMuraCrumb,  MuraCrumbManager.createCrumb( argumentCollection=strCrumb ))  />
 		</cfloop>
 		
 		<cfset $.event("crumbData",aMuraCrumb)>

@@ -13,12 +13,6 @@ please visit http://www.clevertechnology.com/
 		<cfreturn this>
 	</cffunction>
 
-	<cffunction name="addCrumb" access="public" returntype="void" output="false">
-		<cfargument name="crumb" type="struct" required="true">
-		<cfargument name="crumbArray" type="array" required="true">
-		<cfset arrayPrepend(arguments.crumbArray,arguments.crumb)>
-	</cffunction>
-
 	<cffunction name="createCrumb" access="public" returntype="struct" output="false">
 		<cfargument name="siteid" type="string" required="false" default="">
 		<cfargument name="menutitle" type="string" required="true">
