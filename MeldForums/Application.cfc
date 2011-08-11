@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfinclude template="../mappings.cfm">
 
 	<cfset variables.framework=getFrameworkVariables()>
+	<cfset variables.preserveKeyList="context,base,cfcbase,subsystem,subsystembase,section,item,services,action,controllerExecutionStarted">
 	
 	<cffunction name="onApplicationStart" output="false">
 		<cfset var state=preseveInternalState(request)>
@@ -337,21 +338,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="preseveInternalState" output="false">
 		<cfargument name="state">
-		<cfset var preserveKeyList="context,base,cfcbase,subsystem,subsystembase,section,item,services,action,controllerExecutionStarted">
 		<cfset var preserveKeys=structNew()>
 		<cfset var k="">
 		
-		<cfloop list="#preserveKeyList#" index="k">
+		<cfloop list="#variables.preserveKeyList#" index="k">
 			<cfif isDefined("arguments.state.#k#")>
 				<cfset preserveKeys[k]=arguments.state[k]>
 				<cfset structDelete(arguments.state,k)>
 			</cfif>
 		</cfloop>
 		
-		<cfif StructKeyExists(request,'controllers')>
-			<cfset structDelete(request,'controllers') />
-		</cfif>
-		
+		<cfset structDelete(arguments.state,'controllers') />
 		<cfset structDelete( arguments.state, "serviceExecutionComplete" )>
 		
 		<cfreturn preserveKeys>
@@ -360,14 +357,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="restoreInternalState" output="false">
 		<cfargument name="state">
 		<cfargument name="restore">
-		<cfset var preserveKeyList="context,base,cfcbase,subsystem,subsystembase,section,item,services,action,controllerExecutionStarted">
+		<cfset var k="">
 		
-		<cfloop list="#preserveKeyList#" index="k">
+		<cfloop list="#variables.preserveKeyList#" index="k">
 				<cfset structDelete(arguments.state,k)>
 		</cfloop>
 		
-		<cfset structAppend(state,restore,true)>
-		<cfset structDelete( state, "serviceExecutionComplete" )>
+		<cfset structAppend(arguments.state,arguments.restore,true)>
+		<cfset structDelete(arguments.state,'controllers') />
+		<cfset structDelete( arguments.state, "serviceExecutionComplete" )>
 	</cffunction>
 	
 	<cffunction name="getMuraScope" output="false">
