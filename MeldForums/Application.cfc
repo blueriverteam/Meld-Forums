@@ -4,7 +4,6 @@ This file is part of the Meld Forums application.
 Meld Forums is licensed under the GPL 2.0 license
 Copyright (C) 2010 2011 Meld Solutions Inc. http://www.meldsolutions.com/
 
-This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation, version 2 of that license..
 
@@ -24,6 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfinclude template="../mappings.cfm">
 
 	<cfset variables.framework=getFrameworkVariables()>
+	
+	<cffunction name="onApplicationStart" output="false">
+		<cfset var state=preseveInternalState(request)>
+		<cfset super.onApplicationStart(argumentCollection=arguments)>
+		<cfset restoreInternalState(request,state)>
+	</cffunction>
 
 	<cffunction name="isAdminRequest" output="false">
 		<cfif left(request.context.action,5) eq 'admin'>
