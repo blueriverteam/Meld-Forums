@@ -3,7 +3,7 @@
 <package>MeldForums</package>
 <directoryFormat>packageOnly</directoryFormat>
 <loadPriority>4</loadPriority>
-<version>Beta 2.0.1.3</version>
+<version>Beta 2.0.1.4</version>
 <provider>Meld Solutions Inc.</provider>
 <providerURL>http://www.meldsolutions.com</providerURL>
 <category>Application</category>
