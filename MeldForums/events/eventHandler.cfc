@@ -68,8 +68,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfreturn />
 		</cfif>
 
-		<cfset request.nocache = 1 />
-
 		<cfset pluginEvent.setValue("aCrumbData",aCrumbData) />
 		<cfset meldForumsEventManager.announceEvent($,"onMeldForumsAddBreadCrumbs",pluginEvent)>
 		<cfset meldForumsManager.setCrumbData( $,aCrumbData ) />
@@ -77,15 +75,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="onSiteRequestStart">
 		<cfargument name="$">
-
-		<cfset request.nocache = 1 />
 	</cffunction>
 
 	<cffunction name="onSiteRequestInit">
 		<cfargument name="$">
 		
-		<cfset var app 					= variables.pluginConfig.getApplication() />
-		<cfset var beanFactory			= app.getValue('beanFactory') />
+		<cfset var app 					= "" />
+		<cfset var beanFactory			= "" />
 		<cfset var cFileName			= $.event().getValue('currentfilename') />
 		<cfset var filenameMarker		= refindNoCase("\/mf[$|/]",$.event().getValue('currentfilename')) />
 		<cfset var pathMarker			= refindNoCase("\/mf[$|/]",$.event().getValue('path')) />
@@ -95,7 +91,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var aIntercept			= ArrayNew(1) />
 		<cfset var sIntercept			= "" />
 
-		<cfset request.nocache = 1 />
+		<!--- deal with vanishing application scope --->
+		<cfif not variables.pluginConfig.getApplication().valueExists("beanFactory")>
+			<cfinvoke component="#pluginConfig.getPackage()#.Application" method="onApplicationStart" />
+		</cfif>
+
+		<cfset app 			= variables.pluginConfig.getApplication() />
+		<cfset beanFactory	= app.getValue('beanFactory') />
 
 		<cfif not filenameMarker or isSimpleValue(beanFactory)>
 			<cfreturn />
