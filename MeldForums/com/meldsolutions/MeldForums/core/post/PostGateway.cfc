@@ -138,10 +138,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif structKeyExists(arguments,"PostID") AND len(arguments.PostID)>
 				AND pst.PostID = <cfqueryparam value="#arguments.PostID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
-
-			<cfif structKeyExists(arguments,"PostID") AND len(arguments.PostID)>
-				pst.PostID IN (<cfqueryparam value="#arguments.PostID#" CFSQLType="cf_sql_char" list="true" maxlength="35" />)
-			</cfif>
 				
 			<cfif structKeyExists(arguments,"ThreadID") AND len(arguments.ThreadID)>
 				AND pst.ThreadID = <cfqueryparam value="#arguments.ThreadID#" CFSQLType="cf_sql_char" maxlength="35" />
