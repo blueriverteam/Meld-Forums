@@ -307,6 +307,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset getUserDAO().save( userBean ) />
 		<cfreturn true />
 	</cffunction>
+	
+	<cffunction name="setLoggedIn" access="public" output="false" returntype="boolean">
+		<cfargument name="userID" type="string" required="true" />
+		<cfargument name="siteID" type="string" required="true" />
+		
+		<cfset var userBean  = getUserCache( arguments.siteID ).getUser( arguments.userID ) />>
+		
+		<cfif not userBean.beanExists()>
+			<cfreturn false>
+		</cfif>
+		
+		<cfset userBean.setdateLastLogin( createODBCDateTime(now() ) )>
+		<cfset userBean.setdateIsNewFrom( createODBCDateTime(now() ) )>
+		<cfset userBean.setdateLastAction( createODBCDateTime(now() ) )>
+		
+		<cfset userBean.save() />
+		<cfset getUserCache( arguments.siteID ).purgeUser( arguments.userID ) />
+
+		<cfreturn true />
+	</cffunction>
 
 	<cffunction name="userAddedThread" access="public" output="false" returntype="void">
 		<cfargument name="userID" type="string" required="true" />

@@ -77,6 +77,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="$">
 	</cffunction>
 
+	<cffunction name="onSiteLoginSuccess" output="false" returntype="any">
+		<cfargument name="$">
+
+		<cfset var app 						= variables.pluginConfig.getApplication() />
+		<cfset var beanFactory				= app.getValue('beanFactory') />
+		<cfset var userService				= beanFactory.getBean('userService')>	
+		<cfset var userID 					= $.currentUser().getUserID()>
+
+		<cfset userService.setLoggedIn( userID,$.event().getValue('siteID') )>
+	</cffunction>
+
+	<cffunction name="onGlobalLoginSuccess" output="false" returntype="any">
+		<cfargument name="$">
+
+		<cfset var app 						= variables.pluginConfig.getApplication() />
+		<cfset var beanFactory				= app.getValue('beanFactory') />
+		<cfset var userService				= beanFactory.getBean('userService')>	
+		<cfset var userID 					= $.currentUser().getUserID()>
+
+		<cfset userService.setLoggedIn( userID,$.event().getValue('siteID') )>
+	</cffunction>
+
 	<cffunction name="onSiteRequestInit">
 		<cfargument name="$">
 		
