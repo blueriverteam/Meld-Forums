@@ -406,7 +406,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var strCrumb			= StructNew() />
 		<cfset var aCrumb			= ArrayNew(1) />
 		<cfset var aMuraCrumb		= duplicate($.event("crumbData")) />
-		<cfset var iiX				= "" />
 		<cfset var filename			= $.event().getValue("currentFileName") & "/" />
 		
 		<cfloop from="1" to="#arraylen(aCrumbData)#" index="iiX">
