@@ -61,13 +61,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<!--- recent posts --->
 		<cfset pageBean.setSize( 20 ) />
-		<cfset sArgs					= StructNew() />
-		<cfset sArgs.siteID				= rc.siteID />
-		<cfset sArgs.pageBean			= pageBean />
-		<cfset sArgs.orderBy			= "pst.dateLastUpdate DESC" />
-		<cfset sArgs.groupByThread		= 1 />
-
-		<cfset rc.aPosts = postService.getPosts( argumentCollection=sArgs ) />
+		<cfset rc.aPosts = postService.getRecentActivity( pageBean ) />
 
 		<!--- recent users --->
 		<cfset pageBean.setSize( 20 ) />

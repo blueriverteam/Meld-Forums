@@ -57,7 +57,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="ParentID" type="string" required="false" />
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="orderby" type="string" required="false" />
-		<cfargument name="groupByThread" type="boolean" required="false" default="false" />
 		<cfargument name="idList" type="string" required="false" />
 		<cfargument name="pageBean" type="any" required="false" />
 		<cfargument name="isCount" type="any" required="false" default="false" />
@@ -83,24 +82,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				TOP  #( Ceiling(Val(arguments.pageBean.getPos())) + Ceiling(Val(arguments.pageBean.getSize())) )#
 			</cfif>
 			<cfif arguments.isCount>
-				<cfif groupByThread>
-					COUNT(DISTINCT thr.threadID) AS total
-				<cfelse>
-					COUNT(pst.postID) AS total
-				</cfif>					
+				COUNT(pst.postID) AS total
 			<cfelse>
-				<cfif groupByThread>
-					pst.postID,
-					thr.title AS Title,
-					thr.idx AS threadIDX,
-					thr.friendlyName as threadFriendlyName,
-					pst.userID,
-					pst.dateCreate,
-					pst.dateLastUpdate
-				<cfelse>
-					*,1 AS BeanExists,
-					thr.title AS Title,thr.idx AS threadIDX,thr.friendlyName as threadFriendlyName,thr.siteID as siteID
-				</cfif>					
+				*,1 AS BeanExists,
+				thr.title AS Title,thr.idx AS threadIDX,thr.friendlyName as threadFriendlyName,thr.siteID as siteID
 			</cfif>
 			FROM	#variables.dsnprefix#mf_post pst
 			<cfif not arguments.isCount or len(arguments.siteID)>
@@ -202,11 +187,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif structKeyExists(arguments,"ParentID") AND len(arguments.ParentID)>
 				AND pst.ParentID = <cfqueryparam value="#arguments.ParentID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
-
-		<cfif not arguments.isCount and arguments.groupbyThread eq true>
-			GROUP BY thr.threadID
-			<cfif variables.dsntype eq "mssql">,pst.postID,thr.title,thr.idx,thr.friendlyName,pst.userID,pst.dateCreate,pst.dateLastUpdate</cfif>
-		</cfif>
 		<cfif not arguments.isCount and structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
 			ORDER BY #arguments.orderby#
 		</cfif>
@@ -267,7 +247,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="ParentID" type="string" required="false" />
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="orderby" type="string" required="false" />
-		<cfargument name="groupByThread" type="boolean" required="false" default="false" />
 		<cfargument name="pageBean" type="any" required="false" />
 		<cfargument name="siteID" type="string" required="false" default="" />
 		
@@ -673,6 +652,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="userID" type="uuid" required="true" />
 		<cfargument name="type" type="numeric" required="false" default="2" />
 
+		<cfset var qList = "" />
+
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			UPDATE
 			#variables.dsnprefix#mf_post
@@ -683,6 +664,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			AND
 				isDisabled = <cfqueryparam value="#arguments.type#" CFSQLType="cf_sql_integer" />			
 		</cfquery>
+	</cffunction>
+
+	<cffunction name="getRecentActivity" access="public" output="false" returntype="array">
+		<cfargument name="pageBean" type="any" required="true" />
+	
+		<cfset var qList = "" />
+		<cfset var aList = ArrayNew(1) />
+
+		<cfset var sArgs = StructNew() />
+
+		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			SELECT
+			<cfif variables.dsntype eq "mssql"> 	
+				TOP  #( Ceiling(Val(arguments.pageBean.getPos())) + Ceiling(Val(arguments.pageBean.getSize())) )#
+			</cfif>
+				threadID,postID
+			FROM
+				#variables.dsnprefix#mf_post
+			GROUP BY
+				threadID
+				<cfif variables.dsntype eq "mssql">
+				,postID,datelastupdate
+				</cfif>
+			ORDER BY
+				dateLastUpdate DESC			
+			<cfif variables.dsntype eq "mysql">
+				LIMIT <cfif len(arguments.pageBean.getPos())><cfqueryparam value="#arguments.pageBean.getPos()#" CFSQLType="cf_sql_integer"  />,</cfif> <cfqueryparam value="#arguments.pageBean.getSize()#" CFSQLType="cf_sql_integer"  />
+			</cfif>
+		</cfquery>
+
+		<cfset sArgs.idList		= valueList( qList.postID ) /> 
+		<cfset sArgs.orderBy	= "pst.dateLastUpdate DESC" /> 
+		<cfset sArgs.pageBean	= arguments.pageBean /> 
+
+		<cfreturn getByAttributes( argumentCollection=sArgs ) />
 	</cffunction>
 
 <!---^^CUSTOMEND^^--->

@@ -17,7 +17,7 @@
 				</td>
 				<td class="midWidth">
 					<cfif isDate( local.user.getDateLastUpdate() )>
-						#lsdateFormat(local.user.getDateLastUpdate(),"short")# #lstimeFormat(local.user.getDateLastUpdate(),"short")#
+						#lsdateFormat(local.post.getDateLastUpdate(),"short")# #lstimeFormat(local.post.getDateLastUpdate(),"short")#
 					</cfif>					
 				</td>
 			</tr>

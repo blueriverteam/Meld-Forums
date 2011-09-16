@@ -84,7 +84,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="pageBean" type="any" required="false" />
 		<cfargument name="orderby" type="string" required="false" />
-		<cfargument name="groupByThread" type="boolean" required="false" default="false" />
 		<cfargument name="siteID" type="string" required="false" default="" />
 
 		<cfreturn getPostGateway().getByAttributes(argumentCollection=arguments) />
@@ -290,6 +289,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="type" type="numeric" required="false" default="2" />
 
 		<cfset getPostGateway().unblockByUserID(argumentCollection=arguments) />
+	</cffunction>
+
+	<cffunction name="getRecentActivity" access="public" output="false" returntype="array">
+		<cfargument name="pageBean" type="any" required="true" />
+
+		<cfreturn getPostGateway().getRecentActivity(argumentCollection=arguments) />
 	</cffunction>
 
 <!---^^CUSTOMEND^^--->
