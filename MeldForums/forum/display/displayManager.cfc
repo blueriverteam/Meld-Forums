@@ -54,6 +54,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var meldForumsRequestManager	= beanFactory.getBean("MeldForumsRequestManager") />
 		<cfset var meldForumsBean			= MeldForumsRequestManager.getMeldForumsBean($,true) />
 
+		<cfif isJson( $.event().getValue('params') )>
+			<cfset params = deserializeJSON( $.event().getValue("params") ) />
+		</cfif>
+
 		<cfif not isStruct(params)>
 			<cfset params = StructNew() />
 		</cfif>
@@ -62,8 +66,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset state=fw1.preseveInternalState(request)>
 		<cfset structDelete(request,"context") />
-
-		<cfset params = deserializeJSON( $.event().getValue("params") ) />
 
 		<cfif len( meldForumsBean.getAction() ) >
 			<cfset arguments.action = variables.subsystem & ":#meldForumsBean.getAction()#" />
@@ -75,7 +77,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif len(arguments.$.event(variables.framework.action))>
 				<cfset arguments.action = variables.subsystem & ":" & arguments.$.event(variables.framework.action)>
 			<cfelse>
-				<cfset arguments.action = variables.subsystem & ":" & variables.framework.home>
+				<cfset arguments.action = variables.subsystem & ":" & "conference">
 			</cfif>
 		</cfif>
 		
