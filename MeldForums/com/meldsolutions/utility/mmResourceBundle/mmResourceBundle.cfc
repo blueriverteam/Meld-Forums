@@ -65,7 +65,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		
 		<cfset keyValue = getRBFactory().getKeyValue(arguments.locale,fullKey) /> 
 									
-		<cfif keyValue eq "#fullKey#_missing">
+		<cfif keyValue eq "#fullKey#_missing" and getBaseRBLocale() eq "en" and not getHasCustom()>
 			<cfreturn appendKey( fullKey,arguments.value,arguments.locale,true,true ) />
 		</cfif>
 
@@ -221,6 +221,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="locale" type="string" required="false" default="#getBaseRBLocale()#" />
 		
 		<cfset var rbFactory 	= "" />
+		<cfset var rbCustomFactory 	= "" />
 		<cfset var parent		= "" />
 
 		<cfif structKeyExists(variables.instance,"ParentFactory")>
@@ -229,13 +230,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset parent = application.rbFactory />
 		</cfif>
 
-		<cfset rbFactory = createObject("component","mura.resourceBundle.resourceBundleFactory").init(application.rbFactory,getRBPath(),getBaseRBLocale() ) />
-		<cfset variables.sRB[ arguments.locale ] = rbFactory />
+		<cfif getHasCustom()>
+			<cfset rbFactory = createObject("component","mura.resourceBundle.resourceBundleFactory").init(application.rbFactory,getRBPath(),getBaseRBLocale() ) />
+			<cfset rbCustomFactory = createObject("component","mura.resourceBundle.resourceBundleFactory").init(rbFactory,getRBCustomPath(),getBaseRBLocale() ) />
+			<cfset variables.sRB[ arguments.locale ] = rbCustomFactory />
+		<cfelse>
+			<cfset rbFactory = createObject("component","mura.resourceBundle.resourceBundleFactory").init(application.rbFactory,getRBPath(),getBaseRBLocale() ) />
+			<cfset variables.sRB[ arguments.locale ] = rbFactory />
+		</cfif>
 	</cffunction>
 
 	<cffunction name="doValidateBaseResourceBundle" access="private" returntype="void" output="false">
-		<cfset var path		= getpluginFileRoot() & "/resourceBundles" />
-		<cfset var file		= path & "/" & getBaseRBLocale() & ".properties" />
+		<cfset var path			= getpluginFileRoot() & "/resourceBundles" />
+		<cfset var customPath	= getpluginFileRoot() & "/resourceBundles/custom" />
+		<cfset var file			= path & "/" & getBaseRBLocale() & ".properties" />
+		<cfset var customFile	= customPath & "/" & getBaseRBLocale() & ".properties" />
+
+		<cfset variables.instance.rbCustomPath = "" />
+		<cfset variables.instance.rbCustomFile = "" />
 
 		<cfif not len( getpluginFileRoot() ) or not directoryExists( getpluginFileRoot() )>
 			<cfset variables.rbValid = false>
@@ -250,6 +262,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cffile action="write" file="#file#" output="## Created by mmResourceBundle #lsDateFormat(now(),"short")#">
 		</cfif>
 
+		<cfif fileExists( customFile )>
+			<cfset variables.instance.rbCustomPath = customPath />
+			<cfset variables.instance.rbCustomFile = customFile />
+		</cfif>
+
 		<cfset variables.instance.rbPath	= path />
 		<cfset variables.instance.rbFile	= file />
 
@@ -259,8 +276,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="getRBFile" access="public" returntype="string" output="false">
 		<cfreturn variables.instance.rbFile />
 	</cffunction>
+	<cffunction name="getRBCustomFile" access="public" returntype="string" output="false">
+		<cfreturn variables.instance.rbCustomFile />
+	</cffunction>
 	<cffunction name="getRBPath" access="public" returntype="string" output="false">
 		<cfreturn variables.instance.rbPath & "/" />
+	</cffunction>
+	<cffunction name="getRBCustomPath" access="public" returntype="string" output="false">
+		<cfreturn variables.instance.rbCustomPath & "/" />
+	</cffunction>
+	<cffunction name="getHasCustom" access="public" returntype="string" output="false">
+		<cfreturn StructKeyExists(variables.instance,"rbCustomFile") and len(variables.instance.rbCustomFile) />
 	</cffunction>
 	<cffunction name="getRBValid" access="public" returntype="string" output="false">
 		<cfreturn variables.rbValid />

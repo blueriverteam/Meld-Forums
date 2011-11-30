@@ -114,7 +114,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var sIntercept			= "" />
 
 		<!--- deal with vanishing application scope --->
-		<cfif not variables.pluginConfig.getApplication().valueExists("beanFactory")>
+		<cfif not variables.pluginConfig.getApplication().valueExists("beanFactory")
+			or isSimpleValue( variables.pluginConfig.getApplication().getValue("beanFactory") )>
 			<cfinvoke component="#pluginConfig.getPackage()#.Application" method="onApplicationStart" />
 		</cfif>
 

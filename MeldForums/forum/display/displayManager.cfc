@@ -24,8 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="renderApp" output="false" returntype="String" >
 		<cfargument name="$">
-
 		<cfset var beanFactory		= variables.pluginConfig.getApplication().getValue('beanFactory') />
+
+		<!--- deal with vanishing application scope --->
+		<cfif isSimpleValue( beanFactory )>
+			<cfinvoke component="#pluginConfig.getPackage()#.Application" method="onApplicationStart" />
+			<cfset beanFactory = variables.pluginConfig.getApplication().getValue('beanFactory') />
+		</cfif>
 
 		<cfif not StructKeyExists(variables,"subsystem") or not len(variables.subsystem)>
 			<cfset variables.subsystem = getSubSystem() />

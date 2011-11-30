@@ -134,6 +134,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<!--- push the ColdSpring factory into plugin application scope --->
 		<cfset variables.pluginConfig.getApplication().setValue( "beanFactory", beanFactory ) />
 
+		<!--- deal with getApplication() issue --->
+		<cflock scope="application" timeout="10">
+			<cfif not StructKeyExists(application,"meld")>
+				<cfset application['meld'] = StructNew() />
+			</cfif>
+			<cfset application['meld']['meldforumsbeanfactory'] = beanFactory />
+		</cflock>
+
 		<cfset beanFactory.getBean('MuraManager').setServiceFactory( $.event().getServiceFactory() ) />
 
 		<!--- push the ColdSpring factory and pluginConfig into the manager --->
@@ -221,6 +229,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
 			<!--- build CS factory --->
 			<cfset beanFactory=createObject("component","coldspring.beans.DefaultXmlBeanFactory").init( defaultProperties=defaultProperties ) />
+
 			<!--- load beans --->
 			<cfset beanFactory.loadBeansFromXmlRaw( coldspringXml ) />
 			<!--- set the main FW/1 bean factory as the parent factory --->
