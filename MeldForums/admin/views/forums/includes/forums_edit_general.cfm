@@ -7,11 +7,11 @@
 		<ul class="form">
 			<li class="first">
 				<label for="forumbean_name">#rc.mmRBF.key('forumname')#</label>
-				<input class="text" type="text" name="forumbean_name" id="forumbean_name" value="#form.forumbean_name#" size="30" maxlength="100" required="true" validate="string" message="#rc.mmRBF.key('forumname','validation')#" />
+				<input class="text" type="text" name="forumbean_name" id="forumbean_name" value="#form.forumbean_name#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('forumname','validation')#" />
 			</li>
 			<li>
 				<label for="forumbean_title">#rc.mmRBF.key('forumtitle')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('forumtitle','tip')#</span>&nbsp;</a></label>
-				<input class="text" type="text" name="forumbean_title" id="forumbean_title" value="#form.forumbean_title#" size="30" maxlength="100" required="true" validate="string" message="#rc.mmRBF.key('forumtitle','validation')#" />
+				<input class="text" type="text" name="forumbean_title" id="forumbean_title" value="#form.forumbean_title#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('forumtitle','validation')#" />
 			</li>
 			<li>
 				<label for="forumbean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <span class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'forumbean_friendlyname')">#rc.mmRBF.key('show')#</span></label>

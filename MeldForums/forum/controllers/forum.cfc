@@ -37,6 +37,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset var conferenceService		= getBeanFactory().getBean("ConferenceService") />
 		<cfset var forumService				= getBeanFactory().getBean("forumService") />
+		<cfset var userService				= getBeanFactory().getBean("userService") />
 		<cfset var mmUtility				= getBeanFactory().getBean("mmUtility")>
 		<cfset var pageManager				= getBeanFactory().getBean("PageManager")>
 		<cfset var subscribeService			= getBeanFactory().getBean("SubscribeService")>
@@ -62,6 +63,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif len( rc.meldForumsBean.getIdent() )>
 			<cfset idx = rereplace( rc.meldForumsBean.getIdent(),"[^\d]","","all" ) />
 		</cfif>
+
+		<cfset rc.lastDateIsNewFrom = userService.getLastDateIsNewFrom( $.currentUser().getUserID() ) />
 
 		<cfif len( rc.meldForumsBean.getIdent() ) and isNumeric(idx) >
 			<cfset pluginEvent.setValue("ident",rc.meldForumsBean.getIdent() ) />

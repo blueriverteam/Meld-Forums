@@ -9,7 +9,7 @@
 <!--- begin content --->
 <div id="meld-body" class="section">
 	<!-- CONTENT HERE -->
-	<form id="meld-edit-form" class="meld-form" method="post" action="index.cfm">
+	<form id="meld-edit-form" class="meld-form" method="post" action="index.cfm" onsubmit="return validate(this)">
 	<input type="hidden" name="action" value="settings.edit">
 	<input type="hidden" name="settingsID" value="#rc.settingsBean.getSettingsID()#">
 	<div id="meld-body">

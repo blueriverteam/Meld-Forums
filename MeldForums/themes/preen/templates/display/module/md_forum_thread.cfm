@@ -21,6 +21,8 @@
 		<span class="mf-wrapper">
 		<cfif len(local.eventContent['forumthreadicon'])>
 			#local.eventContent['forumthreadicon']#
+		<cfelseif  attributes.type eq 0>
+			#rc.MFBean.getThreadViewIcon( local.threadBean )#
 		<cfelse>
 			<div class="mf-icon type#attributes.type#" title="#rc.mmRBF.key('threadtype#attributes.type#')#">&nbsp;</div>
 		</cfif>

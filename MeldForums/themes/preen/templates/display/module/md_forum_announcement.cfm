@@ -1,6 +1,7 @@
 ﻿<cfsilent>
 	<cfset local	= attributes.local />
 	<cfset rc		= local.rc />
+	<cfset attributes.type = 2 />
 
 	<cfparam name="attributes.type" default="#local.threadBean.getTypeID()#">
 	<cfparam name="attributes.rowClass" default="">

@@ -9,19 +9,19 @@
 				<label for="settingsbean_filesizelimit">
 					<a href="##" class="tooltip"><span>#rc.mmRBF.key('filesizelimit','tip')#</span>#rc.mmRBF.key('filesizelimit')#</a>
 				</label>
-				<input class="text tiny" type="text" name="settingsbean_filesizelimit" id="settingsbean_filesizelimit" value="#form.settingsbean_filesizelimit#" size="20" maxlength="8" required="true" validate="numeric" message="#rc.mmRBF.key('filesizelimit','validation')#" />
+				<input class="text tiny" type="text" name="settingsbean_filesizelimit" id="settingsbean_filesizelimit" value="#form.settingsbean_filesizelimit#" size="20" maxlength="8" data-required="true" data-validate="numeric" data-message="#rc.mmRBF.key('filesizelimit','validation')#" />
 			</li>
 			<li>
 				<label for="settingsbean_allowedextensions">
 					<a href="##" class="tooltip"><span>#rc.mmRBF.key('allowedextensions','tip')#</span>#rc.mmRBF.key('allowedextensions')#</a>
 				</label>
-				<input class="text" type="text" name="settingsbean_allowedextensions" id="settingsbean_allowedextensions" value="#form.settingsbean_allowedextensions#" size="100" maxlength="250" required="false" />
+				<input class="text" type="text" name="settingsbean_allowedextensions" id="settingsbean_allowedextensions" value="#form.settingsbean_allowedextensions#" size="100" maxlength="250" data-required="false" />
 			</li>
 			<li>
 				<label for="settingsbean_basetempdir">
 					<a href="##" class="tooltip"><span>#rc.mmRBF.key('basetempdir','tip')#</span>#rc.mmRBF.key('basetempdir')#</a>
 				</label>
-				<input class="text" type="text" name="settingsbean_basetempdir" id="settingsbean_basetempdir" value="#form.settingsbean_basetempdir#" size="100" maxlength="250" required="false" />
+				<input class="text" type="text" name="settingsbean_basetempdir" id="settingsbean_basetempdir" value="#form.settingsbean_basetempdir#" size="100" maxlength="250" data-required="false" />
 			</li>
 			<li class="checkbox padded">
 				<input class="checkbox" type="checkbox" name="settingsbean_values_resettempdirectory" id="settingsbean_values_resettempdirectory" value="1" />

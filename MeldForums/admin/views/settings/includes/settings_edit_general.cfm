@@ -10,11 +10,11 @@
 		<ul class="form">
 			<li class="first">
 				<label for="settingsbean_threadsperpage">#rc.mmRBF.key('threadsperpage')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('threadsperpage','tip')#</span>&nbsp;</a></label>
-				<input class="text tiny" type="text" name="settingsbean_threadsperpage" id="settingsbean_threadsperpage" value="#form.settingsbean_threadsperpage#" size="10" maxlength="5" required="true" validate="numeric" message="#rc.mmRBF.key('threadsperpage','validation')#" />
+				<input class="text tiny" type="text" name="settingsbean_threadsperpage" id="settingsbean_threadsperpage" value="#form.settingsbean_threadsperpage#" size="10" maxlength="5" data-required="true" data-validate="numeric" data-message="#rc.mmRBF.key('threadsperpage','validation')#" />
 			</li>
 			<li>
 				<label for="settingsbean_postsperpage">#rc.mmRBF.key('postsperpage')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('postsperpage','tip')#</span>&nbsp;</a></label>
-				<input class="text tiny" type="text" name="settingsbean_postsperpage" id="settingsbean_postsperpage" value="#form.settingsbean_postsperpage#" size="10" maxlength="5" required="true" validate="numeric" message="#rc.mmRBF.key('postsperpage','validation')#" />
+				<input class="text tiny" type="text" name="settingsbean_postsperpage" id="settingsbean_postsperpage" value="#form.settingsbean_postsperpage#" size="10" maxlength="5" data-required="true" data-validate="numeric" data-message="#rc.mmRBF.key('postsperpage','validation')#" />
 			</li>
 			<li>
 				<label for="settingsbean_searchmode">#rc.mmRBF.key('searchmode')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('searchmode','tip')#</span>&nbsp;</a></label>

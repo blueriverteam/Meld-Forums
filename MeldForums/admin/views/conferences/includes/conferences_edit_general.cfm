@@ -7,11 +7,11 @@
 		<ul class="form">
 			<li class="first">
 				<label for="conferencebean_name">#rc.mmRBF.key('conferencename')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('conferencename','tip')#</span>&nbsp;</a></label>
-				<input class="text" type="text" name="conferencebean_name" id="conferencebean_name" value="#form.conferencebean_name#" size="30" maxlength="100" required="true" validate="string" message="#rc.mmRBF.key('conferencename','validation')#" />
+				<input class="text" type="text" name="conferencebean_name" id="conferencebean_name" value="#form.conferencebean_name#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('conferencename','validation')#" />
 			</li>
 			<li>
 				<label for="conferencebean_title">#rc.mmRBF.key('conferencetitle')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('conferencetitle','tip')#</span>&nbsp;</a></label>
-				<input class="text" type="text" name="conferencebean_title" id="conferencebean_title" value="#form.conferencebean_title#" size="30" maxlength="100" required="true" validate="string" message="#rc.mmRBF.key('conferencetitle','validation')#" />
+				<input class="text" type="text" name="conferencebean_title" id="conferencebean_title" value="#form.conferencebean_title#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('conferencetitle','validation')#" />
 			</li>
 			<li>
 				<label for="conferencebean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <span class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'conferencebean_friendlyname')">#rc.mmRBF.key('show')#</span></label>

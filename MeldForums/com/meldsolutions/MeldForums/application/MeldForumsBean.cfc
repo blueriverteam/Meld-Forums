@@ -451,6 +451,96 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn link>
 	</cffunction>
 
+	<cffunction name="getThreadViewIcon" access="public" returntype="string" output="false">
+		<cfargument name="threadBean" type="any" required="true" />
+		<cfargument name="iconType" type="numeric" required="false" default="0" />
+
+		<cfset var icon = "">
+		<cfset var type = 0 />
+		<cfset var newFrom = getLastDateIsNewFrom( $.currentUser().getUserID() ) />
+		<cfset var dateComp = dateCompare( newFrom,arguments.threadBean.getDateLastPost() ) />
+
+		<cfif not getThreadViewed( arguments.threadBean ) and dateComp lte 0>
+			<cfset arguments.iconType = arguments.iconType & "_new" />
+		</cfif>
+
+		<cfsavecontent variable="icon"><cfoutput><div class="mf-icon type#arguments.iconType#" title="#variables.mmRBF.key('threadtype#arguments.iconType#')#">&nbsp;</div></cfoutput></cfsavecontent>
+
+		<cfreturn icon>
+	</cffunction>
+
+	<cffunction name="setThreadViewed" access="public" returntype="string" output="false">
+		<cfargument name="threadBean" type="any" required="true" />
+
+		<cfset setViewedSession() />
+		
+		<cfset listAppend(session.meld.meldforums.threadsviewed,arguments.threadBean.getIDX()) />
+		<cfif StructKeyExists(cookie,"meldforums_threadsviewed")
+			and not ListFind( cookie['meldforums_threadsviewed'],threadBean.getIDX() )>
+			<cfset cookie['meldforums_threadsviewed'] = listAppend(cookie['meldforums_threadsviewed'],arguments.threadBean.getIDX()) />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="getThreadViewed" access="public" returntype="string" output="false">
+		<cfargument name="threadBean" type="any" required="true" />
+
+		<cfset var isViewed = false /> 
+
+		<cfset setViewedSession() />
+
+		<cfset isViewed = ListFind( session.meld.meldforums['threadsviewed'],threadBean.getIDX() )> 
+				
+		<cfif not isViewed and StructKeyExists(cookie,"meldforums_threadsviewed")>
+			<cfset isViewed = ListFind( cookie['meldforums_threadsviewed'],threadBean.getIDX() )>
+		</cfif>
+		
+		<cfreturn isViewed />
+	</cffunction>
+
+	<cffunction name="setViewedSession" access="public" returntype="void" output="false">
+
+		<cfcookie name="meldforums_datelastacttion" expires="never" value="#now()#" />
+
+		<cfif not isDefined("session.meld.meldforums.threadsviewed")>
+			<cflock scope="session" timeout="10">
+				<cfif not StructKeyExists(session,"meld")>
+					<cfset session.meld = StructNew() />
+				</cfif>
+				<cfif not StructKeyExists(session.meld,"meldforums")>
+					<cfset session.meld.meldforums = StructNew() />
+				</cfif>
+				<cfif not StructKeyExists(session.meld,"threadsviewed") or true>
+					<cfset session.meld.meldforums.threadsviewed = "" />
+				</cfif>
+			</cflock>
+		</cfif>
+		
+		<cfif not StructKeyExists(cookie,"meldforums_datenewfrom")>
+			<cfif StructKeyExists(cookie,"meldforums_datelastacttion")>
+				<cfcookie name="meldforums_datenewfrom" expires="never" value="#cookie.meldforums_datelastacttion#" />
+			<cfelse>
+				<cfcookie name="meldforums_datenewfrom" expires="never" value="#now()#" />
+			</cfif>
+		</cfif>
+		<cfif not StructKeyExists(cookie,"meldforums_threadsviewed")>
+			<cfcookie name="meldforums_threadsviewed" expires="never" value="1" />
+		</cfif>
+	</cffunction>
+
+	<cffunction name="getLastDateIsNewFrom" access="public" output="false" returntype="date">
+		<cfargument name="userID" type="string" required="true" />
+
+		<cfif structKeyExists(session,"meld")
+				and structKeyExists(session.meld,"meldforums")
+				and structKeyExists(session.meld.meldforums,"datenewfrom")>
+			<cfreturn session.meld.meldforums['datenewfrom'] />
+		<cfelseif structKeyExists(cookie,"meldforums_datenewfrom")>
+			<cfreturn cookie['meldforums_datenewfrom'] />
+		<cfelse>
+			<cfreturn now() />
+		</cfif>
+	</cffunction>
+
 	<cffunction name="setIntercept" access="public" returntype="void" output="false">
 		<cfargument name="Intercept" type="array" required="true" />
 		<cfset variables.instance['intercept'] = arguments.Intercept />

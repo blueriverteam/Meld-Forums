@@ -239,7 +239,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="getThreadsWithLastPost" access="public" output="false" returntype="array">
 		<cfargument name="forumID" type="uuid" required="false" />
 		<cfargument name="pageBean" type="any" required="false" />
-		<cfargument name="orderby" type="string" required="false" default="thr.dateLastPost DESC,thr.dateLastUpdate DESC" />
+		<cfargument name="orderby" type="string" required="false" default="isSticky DESC,thr.dateLastPost DESC,thr.dateLastUpdate DESC" />
 		
 		<cfset var aThreads		= getThreads( argumentCollection=arguments )>
 		<cfset var aLastPostIDs	= ArrayNew(1)>
@@ -255,7 +255,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				</cfif>
 			</cfloop>
 		</cfif>
-
 
 		<cfreturn aThreads />
 	</cffunction>

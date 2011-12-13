@@ -313,20 +313,60 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="siteID" type="string" required="true" />
 		
 		<cfset var userBean  = getUserCache( arguments.siteID ).getUser( arguments.userID ) />>
+		<cfset var dateLastAction = "" />
 		
 		<cfif not userBean.beanExists()>
 			<cfreturn false>
 		</cfif>
 		
+		<cflock scope="session" timeout="10">
+			<cfif not StructKeyExists(session,"meld")>
+				<cfset session.meld = StructNew() />
+			</cfif>
+			<cfif not StructKeyExists(session.meld,"meldforums")>
+				<cfset session.meld.meldforums = StructNew() />
+			</cfif>
+			
+			<cfset session.meld.meldforums['datenewfrom'] = userBean.getdateIsNewFrom() />
+			<cfset session.meld.meldforums.threadsviewed = "" />
+		</cflock>
+
+		<cfif StructKeyExists(cookie,"meldforums_datelastacttion") and isDate( cookie.meldforums_datelastacttion )>
+			<cfset dateLastAction = cookie.meldforums_datelastacttion />
+		<cfelse>
+			<cfset dateLastAction = userBean.getdateLastAction() />
+			<cfcookie name="meldforums_datelastacttion" expires="never" value="#dateLastAction#" />
+		</cfif>
+		
+		<cfcookie name="meldforums_datenewfrom" expires="never" value="#dateLastAction#" />
+		<cfif not StructKeyExists(cookie,"meldforums_threadsviewed")>
+			<cfcookie name="meldforums_threadsviewed" expires="1" value="" />
+		</cfif>
+		
 		<cfset userBean.setdateLastLogin( createODBCDateTime(now() ) )>
-		<cfset userBean.setdateIsNewFrom( createODBCDateTime(now() ) )>
-		<cfset userBean.setdateLastAction( createODBCDateTime(now() ) )>
+		<cfset userBean.setdateIsNewFrom( dateLastAction )>
+		<cfset userBean.setdateLastAction( dateLastAction )>
 		
 		<cfset userBean.save() />
 		<cfset getUserCache( arguments.siteID ).purgeUser( arguments.userID ) />
 
 		<cfreturn true />
 	</cffunction>
+
+	<cffunction name="getLastDateIsNewFrom" access="public" output="false" returntype="date">
+		<cfargument name="userID" type="string" required="true" />
+
+		<cfif structKeyExists(session,"meld")
+				and structKeyExists(session.meld,"meldforums")
+				and structKeyExists(session.meld.meldforums,"datenewfrom")>
+			<cfreturn session.meld.meldforums['datenewfrom'] />
+		<cfelseif structKeyExists(cookie,"meldforums_datenewfrom")>
+			<cfreturn cookie['meldforums_datenewfrom'] />
+		<cfelse>
+			<cfreturn now() />
+		</cfif>
+	</cffunction>
+
 
 	<cffunction name="userAddedThread" access="public" output="false" returntype="void">
 		<cfargument name="userID" type="string" required="true" />

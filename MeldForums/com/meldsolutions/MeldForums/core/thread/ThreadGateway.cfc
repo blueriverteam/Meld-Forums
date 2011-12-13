@@ -77,7 +77,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif arguments.isCount>
 				COUNT(thr.threadID) AS total
 			<cfelse>
-				thr.*,1 AS BeanExists,vws.views AS viewCounter
+				thr.*,1 AS BeanExists,vws.views AS viewCounter,thr.typeID = 1 as issticky
 			</cfif>
 			FROM	#variables.dsnprefix#mf_thread thr
 			<cfif not arguments.isCount>
@@ -649,7 +649,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				FROM
 					qSearch
 				WHERE
-					threadID = '#qList.threadID#'
+					threadID = '#qList.threadID[iiX]#'
 			</cfquery>
 			
 			<cfif qPost.RecordCount and StructKeyExists(sPosts,qPost.postID)>
@@ -658,7 +658,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 			<cfset arrayAppend(arrObjects,tmpObj) />
 		</cfloop>
-
 		<cfreturn arrObjects />
 	</cffunction>
 

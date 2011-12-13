@@ -864,13 +864,16 @@ ul.mf-navlist li {
 	padding: 0;
 }
 .mf-block-icon .type2 {
-	background: #fff url(../images/icons/announcement.png) 0 0 no-repeat;
+	background: url(../images/icons/announcement.png) 0 0 no-repeat;
 }
 .mf-block-icon .type0,.mf-block-icon .typesearch,.mf-block-icon .typethread {
-	background: #fff url(../images/icons/folder_new.png) 0 0 no-repeat;
+	background: url(../images/icons/folder_old.png) 0 0 no-repeat;
+}
+.mf-block-icon .type0_new {
+	background: url(../images/icons/folder_new.png) 0 0 no-repeat;
 }
 .mf-block-icon .type1 {
-	background: #fff url(../images/icons/sticky.png) 0 0 no-repeat;
+	background: url(../images/icons/sticky.png) 0 0 no-repeat;
 }
 
 /* @end ICONS

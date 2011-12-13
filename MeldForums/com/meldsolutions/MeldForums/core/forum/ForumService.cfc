@@ -350,7 +350,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset sArgs.pageBean 		= arguments.pageBean>
 		<cfset sArgs.isAnnouncement = 0>
 		<cfset aThreads = getThreadService().getThreadsWithLastPost( argumentCollection=sArgs )>
-				
+		
 		<cfset forumBean.setThreads( aThreads )>
 		
 		<cfreturn forumBean />
