@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="Intercept" type="Array" required="false" default="#ArrayNew(1)#" />
 		<cfargument name="Ident" type="String" required="false" default="" />
 		<cfargument name="Action" type="String" required="false" default="" />
+		<cfargument name="displayRoot" type="String" required="false" default="" />
 
 		<cfset var siteID					= $.event().getValue("siteID") />
 		<cfset var sArgs					= StructNew() />
@@ -45,7 +46,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset variables.BeanFactory		= arguments.BeanFactory />
 		<cfset variables.$					= arguments.$ />
-		<cfset variables.displayRoot		= "" />
+		<cfset variables.displayRoot		= arguments.displayRoot />
 		<cfset variables.event				= arguments.$.event() />
 		<cfset variables.siteID				= siteID />
 		<cfset variables.pluginConfig		= variables.BeanFactory.getBean("MeldForumsManager").getPluginConfig() />

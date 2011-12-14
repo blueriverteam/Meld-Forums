@@ -27,10 +27,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="getMeldForumsBean" access="public" output="false" returntype="any" description="retrieves the ordered tree of conferences and/or forums">
 		<cfargument name="$">
-		<cfargument name="initConfig" required="false" default="false">
+		<cfargument name="initConfig" required="false" default="#StructNew()#">
 
 		<cfset var MeldForumsBean		= "" />
-		<cfset var sArgs		 		= StructNew() />
+		<cfset var sArgs		 		= initConfig />
 
 		<cfif not $.getGlobalEvent().valueExists("MeldForumsBean")>
 			<cfset sArgs.beanFactory = getBeanFactory() />
