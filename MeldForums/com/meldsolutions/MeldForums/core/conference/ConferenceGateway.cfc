@@ -59,55 +59,55 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			WHERE	0=0
 		<!---^^VALUES-START^^--->
 			<cfif structKeyExists(arguments,"ConferenceID") and len(arguments.ConferenceID)>
-				AND ConferenceID = <cfqueryparam value="#arguments.ConferenceID#" CFSQLType="cf_sql_char" maxlength="35" />
+				AND cnf.ConferenceID = <cfqueryparam value="#arguments.ConferenceID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"SiteID") and len(arguments.SiteID)>
-				AND SiteID = <cfqueryparam value="#arguments.SiteID#" CFSQLType="cf_sql_varchar" maxlength="25" />
+				AND cnf.SiteID = <cfqueryparam value="#arguments.SiteID#" CFSQLType="cf_sql_varchar" maxlength="25" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"ConfigurationID") and len(arguments.ConfigurationID)>
-				AND ConfigurationID = <cfqueryparam value="#arguments.ConfigurationID#" CFSQLType="cf_sql_char" maxlength="35" />
+				AND cnf.ConfigurationID = <cfqueryparam value="#arguments.ConfigurationID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"Name") and len(arguments.Name)>
-				AND Name = <cfqueryparam value="#arguments.Name#" CFSQLType="cf_sql_varchar" maxlength="150" />
+				AND cnf.Name = <cfqueryparam value="#arguments.Name#" CFSQLType="cf_sql_varchar" maxlength="150" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"Title") and len(arguments.Title)>
-				AND Title = <cfqueryparam value="#arguments.Title#" CFSQLType="cf_sql_varchar" maxlength="150" />
+				AND cnf.Title = <cfqueryparam value="#arguments.Title#" CFSQLType="cf_sql_varchar" maxlength="150" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"Description") and len(arguments.Description)>
-				AND Description = <cfqueryparam value="#arguments.Description#" CFSQLType="cf_sql_longvarchar" />
+				AND cnf.Description = <cfqueryparam value="#arguments.Description#" CFSQLType="cf_sql_longvarchar" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"IsActive") and len(arguments.IsActive)>
-				AND IsActive = <cfqueryparam value="#arguments.IsActive#" CFSQLType="cf_sql_tinyint" />
+				AND cnf.IsActive = <cfqueryparam value="#arguments.IsActive#" CFSQLType="cf_sql_tinyint" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"FriendlyName") and len(arguments.FriendlyName)>
-				AND FriendlyName = <cfqueryparam value="#arguments.FriendlyName#" CFSQLType="cf_sql_varchar" maxlength="200" />
+				AND cnf.FriendlyName = <cfqueryparam value="#arguments.FriendlyName#" CFSQLType="cf_sql_varchar" maxlength="200" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"OrderNo") and len(arguments.OrderNo)>
-				AND OrderNo = <cfqueryparam value="#arguments.OrderNo#" CFSQLType="cf_sql_integer" />
+				AND cnf.OrderNo = <cfqueryparam value="#arguments.OrderNo#" CFSQLType="cf_sql_integer" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"RemoteID") and len(arguments.RemoteID)>
-				AND RemoteID = <cfqueryparam value="#arguments.RemoteID#" CFSQLType="cf_sql_varchar" maxlength="35" />
+				AND cnf.RemoteID = <cfqueryparam value="#arguments.RemoteID#" CFSQLType="cf_sql_varchar" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"DateCreate") and len(arguments.DateCreate)>
-				AND DateCreate = <cfqueryparam value="#arguments.DateCreate#" CFSQLType="cf_sql_timestamp" />
+				AND cnf.DateCreate = <cfqueryparam value="#arguments.DateCreate#" CFSQLType="cf_sql_timestamp" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"DateLastUpdate") and len(arguments.DateLastUpdate)>
-				AND DateLastUpdate = <cfqueryparam value="#arguments.DateLastUpdate#" CFSQLType="cf_sql_timestamp" />
+				AND cnf.DateLastUpdate = <cfqueryparam value="#arguments.DateLastUpdate#" CFSQLType="cf_sql_timestamp" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"Idx") and len(arguments.Idx)>
-				AND Idx = <cfqueryparam value="#arguments.Idx#" CFSQLType="cf_sql_integer" />
+				AND cnf.Idx = <cfqueryparam value="#arguments.Idx#" CFSQLType="cf_sql_integer" />
 			</cfif>
 			<!---^^VALUES-END^^--->
 		<cfif structKeyExists(arguments, "orderby") and len(arguments.orderBy)>
@@ -252,57 +252,57 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				0=0
 
 			<cfif structKeyExists(arguments.criteria,"ConferenceID") and len(arguments.criteria.ConferenceID)>
-			AND ConferenceID = <cfqueryparam value="#arguments.criteria.ConferenceID#" CFSQLType="cf_sql_char" maxlength="35" />
+			AND cnf.ConferenceID = <cfqueryparam value="#arguments.criteria.ConferenceID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"SiteID") and len(arguments.criteria.SiteID)>
-			AND SiteID = <cfqueryparam value="#arguments.criteria.SiteID#" CFSQLType="cf_sql_varchar" maxlength="25" />
+			AND cnf.SiteID = <cfqueryparam value="#arguments.criteria.SiteID#" CFSQLType="cf_sql_varchar" maxlength="25" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"ConfigurationID") and len(arguments.criteria.ConfigurationID)>
-			AND ConfigurationID = <cfqueryparam value="#arguments.criteria.ConfigurationID#" CFSQLType="cf_sql_char" maxlength="35" />
+			AND cnf.ConfigurationID = <cfqueryparam value="#arguments.criteria.ConfigurationID#" CFSQLType="cf_sql_char" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"Name") and len(arguments.criteria.Name)>
-			AND Name LIKE <cfqueryparam value="%#arguments.criteria.Name#%" CFSQLType="cf_sql_varchar" maxlength="150" />
+			AND cnf.Name LIKE <cfqueryparam value="%#arguments.criteria.Name#%" CFSQLType="cf_sql_varchar" maxlength="150" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"Title") and len(arguments.criteria.Title)>
-			AND Title LIKE <cfqueryparam value="%#arguments.criteria.Title#%" CFSQLType="cf_sql_varchar" maxlength="150" />
+			AND cnf.Title LIKE <cfqueryparam value="%#arguments.criteria.Title#%" CFSQLType="cf_sql_varchar" maxlength="150" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"Description") and len(arguments.criteria.Description)>
-			AND Description LIKE <cfqueryparam value="%#arguments.criteria.Description#%" CFSQLType="cf_sql_longvarchar" />
+			AND cnf.Description LIKE <cfqueryparam value="%#arguments.criteria.Description#%" CFSQLType="cf_sql_longvarchar" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"IsActive") and len(arguments.criteria.IsActive)>
-				AND IsActive = <cfqueryparam value="#arguments.criteria.IsActive#" CFSQLType="cf_sql_tinyint" />
+				AND cnf.IsActive = <cfqueryparam value="#arguments.criteria.IsActive#" CFSQLType="cf_sql_tinyint" />
 			<cfelse>
-				AND IsActive = <cfqueryparam value="1" CFSQLType="cf_sql_tinyint" />
+				AND cnf.IsActive = <cfqueryparam value="1" CFSQLType="cf_sql_tinyint" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"FriendlyName") and len(arguments.criteria.FriendlyName)>
-			AND FriendlyName LIKE <cfqueryparam value="%#arguments.criteria.FriendlyName#%" CFSQLType="cf_sql_varchar" maxlength="200" />
+			AND cnf.FriendlyName LIKE <cfqueryparam value="%#arguments.criteria.FriendlyName#%" CFSQLType="cf_sql_varchar" maxlength="200" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"OrderNo") and len(arguments.criteria.OrderNo)>
-			AND OrderNo = <cfqueryparam value="#arguments.criteria.OrderNo#" CFSQLType="cf_sql_integer" />
+			AND cnf.OrderNo = <cfqueryparam value="#arguments.criteria.OrderNo#" CFSQLType="cf_sql_integer" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"RemoteID") and len(arguments.criteria.RemoteID)>
-			AND RemoteID LIKE <cfqueryparam value="%#arguments.criteria.RemoteID#%" CFSQLType="cf_sql_varchar" maxlength="35" />
+			AND cnf.RemoteID LIKE <cfqueryparam value="%#arguments.criteria.RemoteID#%" CFSQLType="cf_sql_varchar" maxlength="35" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"DateCreate") and len(arguments.criteria.DateCreate)>
-			AND DateCreate LIKE <cfqueryparam value="%#arguments.criteria.DateCreate#%" CFSQLType="cf_sql_timestamp" />
+			AND cnf.DateCreate LIKE <cfqueryparam value="%#arguments.criteria.DateCreate#%" CFSQLType="cf_sql_timestamp" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"DateLastUpdate") and len(arguments.criteria.DateLastUpdate)>
-			AND DateLastUpdate LIKE <cfqueryparam value="%#arguments.criteria.DateLastUpdate#%" CFSQLType="cf_sql_timestamp" />
+			AND cnf.DateLastUpdate LIKE <cfqueryparam value="%#arguments.criteria.DateLastUpdate#%" CFSQLType="cf_sql_timestamp" />
 			</cfif>
 			
 			<cfif structKeyExists(arguments.criteria,"Idx") and len(arguments.criteria.Idx)>
-			AND Idx = <cfqueryparam value="#arguments.criteria.Idx#" CFSQLType="cf_sql_integer" />
+			AND cnf.Idx = <cfqueryparam value="#arguments.criteria.Idx#" CFSQLType="cf_sql_integer" />
 			</cfif>
 
 			<cfif not arguments.isCount AND len( arguments.orderBy )>
