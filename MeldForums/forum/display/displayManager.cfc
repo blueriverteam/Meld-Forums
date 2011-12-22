@@ -57,7 +57,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var params					= structNew() />
 		<cfset var beanFactory				= variables.pluginConfig.getApplication().getValue('beanFactory') />
 		<cfset var meldForumsRequestManager	= beanFactory.getBean("MeldForumsRequestManager") />
-		<cfset var meldForumsBean			= MeldForumsRequestManager.getMeldForumsBean($,true) />
+		<cfset var meldForumsBean			= MeldForumsRequestManager.getMeldForumsBean($) />
 
 		<cfif isJson( $.event().getValue('params') )>
 			<cfset params = deserializeJSON( $.event().getValue("params") ) />

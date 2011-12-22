@@ -50,7 +50,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var pageBean					= pageManager.getPageBean(rc.$) />
 		<cfset var sArgs					= StructNew() />
 
-		<cfset rc.MeldForumsBean			= requestManager.getMeldForumsBean(rc.$,true) />
+		<cfset rc.MeldForumsBean			= requestManager.getMeldForumsBean(rc.$) />
 		<cfset rc.MeldForumsBean.setForumWebRoot( forumManager.getForumRoot(rc.$,rc.pluginConfig.getModuleID()) ) />
 
 		<cfset rc.settingsBean				= settingsManager.getSiteSettings( rc.siteID ) />

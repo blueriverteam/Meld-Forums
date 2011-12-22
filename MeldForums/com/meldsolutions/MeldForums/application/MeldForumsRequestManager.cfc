@@ -32,7 +32,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var MeldForumsBean		= "" />
 		<cfset var sArgs		 		= initConfig />
 
-		<cfif not $.getGlobalEvent().valueExists("MeldForumsBean")>
+		<!--- legacy support --->
+		<cfif not isStruct(arguments.initConfig)>
+			<cfset arguments.initConfig = StructNew() />
+			<cfset sArgs = StructNew() />
+		</cfif>
+		
+		<cfif not $.getGlobalEvent().valueExists("MeldForumsBean")
+			OR (structKeyExists(sArgs,"reinit") AND sArgs.reinit eq true)>
 			<cfset sArgs.beanFactory = getBeanFactory() />
 			<cfset sArgs.$ = $ />
 			<cfif $.getGlobalEvent().valueExists('MeldForumsIntercept')>

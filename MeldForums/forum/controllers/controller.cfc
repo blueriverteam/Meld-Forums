@@ -51,7 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset getErrorManager().addErrorByCode(rc.$.event().getValue("ecode")) />
 		</cfif>
 		
-		<cfset rc.MeldForumsBean	= meldForumsRequestManager.getMeldForumsBean(rc.$,true) />
+		<cfset rc.MeldForumsBean	= meldForumsRequestManager.getMeldForumsBean(rc.$) />
 		<cfset rc.MFBean			= rc.MeldForumsBean />
 
 		<cfif rc.$.currentUser().isLoggedIn()>

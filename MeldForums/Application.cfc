@@ -134,14 +134,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<!--- push the ColdSpring factory into plugin application scope --->
 		<cfset variables.pluginConfig.getApplication().setValue( "beanFactory", beanFactory ) />
 
-		<!--- deal with getApplication() issue --->
-		<cflock scope="application" timeout="10">
-			<cfif not StructKeyExists(application,"meld")>
-				<cfset application['meld'] = StructNew() />
-			</cfif>
-			<cfset application['meld']['meldforumsbeanfactory'] = beanFactory />
-		</cflock>
-
 		<cfset beanFactory.getBean('MuraManager').setServiceFactory( $.event().getServiceFactory() ) />
 
 		<!--- push the ColdSpring factory and pluginConfig into the manager --->
@@ -159,6 +151,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif variables.framework.reloadApplicationOnEveryRequest or StructKeyExists(url,variables.framework.reload)>
 			<cfset application[ variables.framework.applicationKey & "BeanFactory" ] = beanFactory>
 		</cfif>
+
+		<!--- deal with getApplication() issue --->
+		<cflock scope="application" timeout="10">
+			<cfif not StructKeyExists(application,"meld")>
+				<cfset application['meld'] = StructNew() />
+			</cfif>
+			<cfset application['meld']['meldforumsbeanfactory'] = beanFactory />
+		</cflock>
 		
 		<cfif not StructKeyExists(request,"IsMeldForumsDisplayEvent")>
 			<cfset setupSubSystems() />
