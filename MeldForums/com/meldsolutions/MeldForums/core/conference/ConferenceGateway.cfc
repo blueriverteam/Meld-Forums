@@ -55,7 +55,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			SELECT
 				*,1 AS BeanExists
-			FROM	#variables.dsnprefix#mf_conference
+			FROM	#variables.dsnprefix#mf_conference cnf
 			WHERE	0=0
 		<!---^^VALUES-START^^--->
 			<cfif structKeyExists(arguments,"ConferenceID") and len(arguments.ConferenceID)>
