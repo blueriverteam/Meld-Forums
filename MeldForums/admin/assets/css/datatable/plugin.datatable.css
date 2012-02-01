@@ -152,7 +152,6 @@
 }
 #ms-datatable_wrapper .dataTables_processing {
 	position: absolute;
-	background: url(../custom-theme/images/ui-bg_gloss-wave_10_ef9a1f_500x100.png) 0 0 repeat-x;
 	opacity: .80;
 	filter:Alpha(Opacity=80);
 	top: 0px;
