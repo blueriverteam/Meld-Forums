@@ -113,6 +113,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
 		<!--- now get the existing bean --->
 		<cfset conferenceBean = ConferenceService.getConference( formData.conferencebean.conferenceID ) />
+		<cfset conferenceBean.updateMemento( formData.conferenceBean )>
 
 		<cfset pluginEvent.setValue('data',formData ) />
 		<cfset pluginEvent.setValue('siteID',rc.siteID ) />

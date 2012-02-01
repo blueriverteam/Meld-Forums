@@ -165,6 +165,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
 		<!--- now get the existing bean --->
 		<cfset forumBean = ForumService.getForum( formData.forumbean.forumID ) />
+		<cfset forumBean.updateMemento( formData.forumbean )>
 
 		<cfset pluginEvent.setValue('data',formData ) />
 		<cfset pluginEvent.setValue('siteID',rc.siteID ) />
