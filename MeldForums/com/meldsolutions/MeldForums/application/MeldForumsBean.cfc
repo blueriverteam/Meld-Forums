@@ -201,8 +201,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="getForumWebRoot" access="public" returntype="string" output="false">
 
-			<cfif not len(variables.displayRoot)>
-			<cfset variables.displayRoot = $.getURLStem( variables.siteID, variables.$.event().getValue("currentFileName") ) />
+		<cfif not len(variables.displayRoot)>
+			<cfif len( variables.$.event().getValue("currentFileName") )>
+				<cfset variables.displayRoot = $.getURLStem( variables.siteID, variables.$.event().getValue("currentFileName") ) />
+			<cfelse>
+				<cfset variables.displayRoot = $.getURLStem( variables.siteID, "/" ) />
+			</cfif>
 		</cfif>
 		<cfreturn variables.displayRoot />
 	</cffunction>

@@ -105,13 +105,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var app 					= "" />
 		<cfset var beanFactory			= "" />
 		<cfset var cFileName			= $.event().getValue('currentfilename') />
-		<cfset var filenameMarker		= refindNoCase("\/mf[$|/]",$.event().getValue('currentfilename')) />
-		<cfset var pathMarker			= refindNoCase("\/mf[$|/]",$.event().getValue('path')) />
+		<cfset var filenameMarker		= "" />
+		<cfset var pathMarker			= "" />
 
 		<cfset var meldForumsManager	= "" />
 
 		<cfset var aIntercept			= ArrayNew(1) />
 		<cfset var sIntercept			= "" />
+
+		<cfset filenameMarker		= refindNoCase("mf[$|/]",$.event().getValue('currentfilename')) />
+		<cfset pathMarker			= refindNoCase("mf[$|/]",$.event().getValue('path')) />
 
 		<!--- deal with vanishing application scope --->
 		<cfif not variables.pluginConfig.getApplication().valueExists("beanFactory")
@@ -122,20 +125,27 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset app 			= variables.pluginConfig.getApplication() />
 		<cfset beanFactory	= app.getValue('beanFactory') />
 
+		<!---<cfoutput>#filenameMarker# #$.event().getValue('currentfilename')# HERE!</cfoutput><cfabort>--->
+
 		<cfif not filenameMarker or isSimpleValue(beanFactory)>
 			<cfreturn />
 		</cfif>
-
+		
 		<cfset meldForumsManager		= beanFactory.getBean('MeldForumsManager') />
 		
-		<cfset $.event().setValue('currentfilename',left( cFileName,filenameMarker-1 )) />
-		<cfset $.event().setValue('path', left( $.event().getValue('path'),pathMarker-1 ) & "/" ) />
-
-		<cfif len( $.event().getValue('currentfilenameadjusted') )>
-			<cfset $.event().setValue('currentfilenameadjusted',left( cFileName,filenameMarker-1 )) />
+		<cfif filenameMarker gt 1>
+			<cfset $.event().setValue('currentfilename',left( cFileName,filenameMarker-2 )) />
+			<cfset $.event().setValue('path', left( $.event().getValue('path'),pathMarker-2 ) & "/" ) />
+		<cfelse>
+			<cfset $.event().setValue('currentfilename',"" ) />
+			<cfset $.event().setValue('path', left( $.event().getValue('path'),pathMarker-2 ) & "/" ) />
 		</cfif>
 
-		<cfset sIntercept = mid( cFileName,filenameMarker+4,len(cFileName) ) />
+		<cfif len( $.event().getValue('currentfilenameadjusted') )>
+			<cfset $.event().setValue('currentfilenameadjusted',left( cFileName,filenameMarker-2 )) />
+		</cfif>
+
+		<cfset sIntercept = mid( cFileName,filenameMarker+3,len(cFileName) ) />
 	
 		<cfif len( sIntercept )>
 			<cfset aIntercept = ListToArray( sIntercept,"/" ) />
