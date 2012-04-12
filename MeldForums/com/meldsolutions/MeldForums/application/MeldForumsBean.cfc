@@ -203,9 +203,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfif not len(variables.displayRoot)>
 			<cfif len( variables.$.event().getValue("currentFileName") )>
-				<cfset variables.displayRoot = $.getURLStem( variables.siteID, variables.$.event().getValue("currentFileName") ) />
+				<cfset variables.displayRoot = $.globalConfig().getContext() & $.getURLStem( variables.siteID, variables.$.event().getValue("currentFileName") ) />
 			<cfelse>
-				<cfset variables.displayRoot = $.getURLStem( variables.siteID, "/" ) />
+				<cfset variables.displayRoot = $.globalConfig().getContext() & $.getURLStem( variables.siteID, "/" ) />
 			</cfif>
 		</cfif>
 		<cfreturn variables.displayRoot />
